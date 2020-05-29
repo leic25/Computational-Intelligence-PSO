@@ -110,8 +110,6 @@ prirodnih jezika, prepoznavanje rukom pisanih tekstova itd.
 % ščćžđ
 % \end{verbatim}
 
-
-
 \section{Optimizacija}
 \label{optimizacija}
 
@@ -119,19 +117,17 @@ Nesto uopsteno
 
 \subsection{Optimizacija rojem čestica}
 \label{subsec:pso}
-U ovoj sekcije biće objašnjen sam algoritam optimizacije rojem čestica. Najviše vremena ćemo posvetiti originalnom algoritumu PSO, a pažnju ćemo
-posvetiti i drugoj generaciji algoritma PSO (eng. \textit{The Secong Generation of PSO}), kao i novom modelu algoritma PSO 
+U ovoj sekcije biće objašnjen sam algoritam optimizacije rojem čestica. Najviše vremena biće posvećeno originalnom algoritmu PSO, a kao i drugoj generaciji algoritma PSO (eng. \textit{The Secong Generation of PSO}), kao i novom modelu algoritma PSO 
 (eng. \textit{A New Model of PSO}).
 
 
 \subsubsection{Originalni algoritam PSO}
 \label{subsubsec:opso}
-Algoritam PSO (eng. \textit{Particle Swarm Optimization}) je metod za optimizaciju neprekidne nelinearne funkcije, predložen od strane Eberharta.
+Algoritam PSO (eng. \textit{Particle Swarm Optimization}) je metod za optimizaciju neprekidne nelinearne funkcije, koji je predložio Eberhart.
 Sam algoritam je inspirisan posmatranjem socijalnog i kolektivnog ponašanja u kretanju jata ptica pri potrazi za hranom ili preživaljavanjem.
-PSO je nadahnut kretanjem najboljeg člana populacije i njegovog iskustva. Metafora nam govori da se skup rešenja kreće prostorom pretrage
-sa ciljem da nađe što bolju poziciju, rešenje. \cite{hindawi}
+PSO je nadahnut kretanjem najboljeg člana populacije i njegovog iskustva. Metafora govori da se skup rešenja kreće prostorom pretrage sa ciljem da nađe što bolju poziciju, rešenje. \cite{hindawi}
 \\
-Populacijom se smatra grupa jedinki \textit{i} gde svaka predstavlja poziciju  \textbf{\textbf{$x_i \in R^D$, i = 1,...,M}} u višedimenzionom prostoru.
+Populacijom se smatra grupa jedinki \textit{i} gde svaka predstavlja poziciju \textbf{\textbf{$x_i \in R^D$, i = 1,...,M}} u višedimenzionom prostoru.
 Jedinke se evaluiraju u posebnoj funkciji optimizacije, kako bi se odredila njihova prilagođenost i sačuvala najbolja vrednost. Svaka jedinka se kreće po
 prostoru pretrage u zavisnosti od funkcije brzine \textbf{$v_i$} koja u obzir uzima globalno najbolju poziciju u populaciji ($p_g \in R^D$ - socijalna
 komponenta) kao i najbolju poziciju date jedinke ($p_g \in R^D$ - kognitivna komponenta). Jedinke će se kretati u svakoj iteraciji na drugu poziciju,
@@ -149,7 +145,7 @@ način dozvoljavamo jedinki $i$ da traži najbolju oziciju \textbf{$p_i(t)$}, do
 \subsubsection{Druga generacija PSO algoritma}
 \label{subsubsec:sgpso}
 Druga generacija PSO algoritma je unapređenje originalnog PSO algoritma, koja u obzir uzima tri aspekta: lokalni optimum svih jedinki,
-globalno najbolje rešenje i novi koncept, geometrijski centar optimalne populacije populacije. Autori objašnjavaju da ptice održavaju 
+globalno najbolje rešenje, i novi koncept - geometrijski centar optimalne populacije. Autor knjige \textit{"{}Second Generation Particle Swarm Optimization"} objašnjava da ptice održavaju 
 određenu distancu između centra jata (hrane). Jata ptica uvek ostaju u istom regionu neko vreme, tokom kojeg će centar jata ostati
 nepomeren u očima jedinki. Nakon toga, jato se kreće na sledeći region, tada sve jedinke moraju održati određenu distancu sa centrom jata.
 
