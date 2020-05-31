@@ -64,7 +64,7 @@
 
 \title{Podešavanje težina neuronske mreže upotrebom optimizacionog algoritma\\ \small{Seminarski rad u okviru kursa\\Računarska inteligencija\\ Matematički fakultet}}
 
-\author{Nikola Stamenić, Lea Petković\\ mi16177@alas.matf.bg.ac.rs, lea.bela.97@gmail.com}
+\author{Nikola Stamenić, Lea Petković\\ mi16177@alas.matf.bg.ac.rs, mi16163@alas.matf.bg.ac.rs}
 
 %\date{9.~april 2015.}
 
@@ -85,12 +85,9 @@ Ovde ide neki uvod
 \section{Neuronske mreže}
 \label{neuronskemreze}
 
-Neuronska mreža (eng. \emph{Artificial Neural Networks, ANN}) je sistem koji vrši mapiranje između ulaza i izlaza problema. Neuronske mreže zapravo
-predstavljaju parametrizovanu reprezentaciju koja se može koristiti za aproksimaciju raznih funkcija. Matematičkom optimizacijom nekog od kriterijuma
-kvaliteta vrši se pronalaženje odgovarajućih parametara. 
+Neuronska mreža (eng. \emph{Artificial Neural Networks, ANN}) je sistem koji vrši mapiranje između ulaza i izlaza problema. Neuronske mreže zapravo predstavljaju parametrizovanu reprezentaciju koja se može koristiti za aproksimaciju raznih funkcija \cite{hindawi}. Matematičkom optimizacijom nekog od kriterijuma kvaliteta vrši se pronalaženje odgovarajućih parametara. 
 
-Neuronske mreže uče informacije kroz proces treniranja u nekoliko iteracija. Kada je proces učenja završen, neuronska mreža je spremna i sposobna da
-klasifikuje nove informacije, predvidi ponašanje, ili aproksimira nelinearnu funkciju problema. Njena struktura sastoji se od skupa neurona, predstavljenih
+Neuronske mreže uče informacije kroz proces treniranja u nekoliko iteracija. Kada je proces učenja završen, neuronska mreža je spremna i sposobna da klasifikuje nove informacije, predvidi ponašanje, ili aproksimira nelinearnu funkciju problema. Njena struktura sastoji se od skupa neurona, predstavljenih
 funkcijama, koji su međusobno povezani sa ostalim neuronim organizovanim u slojevima. 
 
 Struktura neuronske mreže se razlikuje po broju slojeva. Prvi sloj jeste ulazni sloj, poslednji sloj jeste izlazni, a svi slojevi između se nazivaju skrivenim
@@ -99,7 +96,7 @@ ulazima svih neurona iz narednog sloja. Jačina veza kojom su neuroni međusobno
 3 sloja.
 
 Postoje različite vrste neuronskih mreža. Mozemo ih klasifikovati prema: broju slojeva (jednoslojne i višeslojne), vrsti veza između neurona, smeru
-prostiranja informacija (neuronske mreže sa propagacijom unapred ili unazad), vrsti podataka itd. 
+prostiranja informacija (neuronske mreže sa propagacijom unapred ili unazad) \cite{website}, vrsti podataka itd. 
 
 Njihove primene su mnogobrojne, obzirom da predstavljaju najčešće primenjivanu metodu mašinskog učenja. Neke od primena su: kategorizacija teksta,
 medicinska dijagnostika, prepoznavanje objekata na slikama, autonomna vožnja, igranje igara poput igara na tabli ili video igara, mašinsko prevođenje
@@ -125,7 +122,7 @@ U ovoj sekcije biće objašnjen sam algoritam optimizacije rojem čestica. Najvi
 \label{subsubsec:opso}
 Algoritam PSO (eng. \textit{Particle Swarm Optimization}) je metod za optimizaciju neprekidne nelinearne funkcije, koji je predložio Eberhart.
 Sam algoritam je inspirisan posmatranjem socijalnog i kolektivnog ponašanja u kretanju jata ptica pri potrazi za hranom ili preživaljavanjem.
-PSO je nadahnut kretanjem najboljeg člana populacije i njegovog iskustva. Metafora govori da se skup rešenja kreće prostorom pretrage sa ciljem da nađe što bolju poziciju, rešenje. \cite{hindawi}
+PSO je nadahnut kretanjem najboljeg člana populacije i njegovog iskustva. Metafora govori da se skup rešenja kreće prostorom pretrage sa ciljem da nađe što bolju poziciju, rešenje \cite{hindawi}.
 \\
 Populacijom se smatra grupa jedinki \textit{i} gde svaka predstavlja poziciju \textbf{\textbf{$x_i \in R^D$, i = 1,...,M}} u višedimenzionom prostoru.
 Jedinke se evaluiraju u posebnoj funkciji optimizacije, kako bi se odredila njihova prilagođenost i sačuvala najbolja vrednost. Svaka jedinka se kreće po
