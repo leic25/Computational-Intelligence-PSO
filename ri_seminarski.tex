@@ -8,8 +8,6 @@
  top=30mm,
  }
 
-
-
 \usepackage{color}
 \usepackage{url}
 \usepackage[T2A]{fontenc} % enable Cyrillic fonts
@@ -102,24 +100,24 @@ Njihove primene su mnogobrojne, obzirom da predstavljaju najčešće primenjivan
 medicinska dijagnostika, prepoznavanje objekata na slikama, autonomna vožnja, igranje igara poput igara na tabli ili video igara, mašinsko prevođenje
 prirodnih jezika, prepoznavanje rukom pisanih tekstova itd. 
 
+\subsection{Keras Pajton biblioteka}
+\label{subsec:keras}
+
+Keras je biblioteka za neuronske mreže, napisana u Pajtonu. Keras radi na platformi za mašinsko učenje  \textit{TensorFlow}. Razvijena je sa ciljem da omogući brzo eksperimentisanje \cite{keraswebsite}. 
+
 
 % \begin{verbatim}
 % ščćžđ
 % \end{verbatim}
 
-\section{Optimizacija}
-\label{optimizacija}
-
-Nesto uopsteno
-
-\subsection{Optimizacija rojem čestica}
+\section{Optimizacija rojem čestica}
 \label{subsec:pso}
 U ovoj sekcije biće objašnjen sam algoritam optimizacije rojem čestica. Najviše vremena biće posvećeno originalnom algoritmu PSO, a kao i drugoj generaciji algoritma PSO (eng. \textit{The Secong Generation of PSO}), kao i novom modelu algoritma PSO 
 (eng. \textit{A New Model of PSO}).
 
 
-\subsubsection{Originalni algoritam PSO}
-\label{subsubsec:opso}
+\subsection{Originalni algoritam PSO}
+\label{subsec:opso}
 Algoritam PSO (eng. \textit{Particle Swarm Optimization}) je metod za optimizaciju neprekidne nelinearne funkcije, koji je predložio Eberhart.
 Sam algoritam je inspirisan posmatranjem socijalnog i kolektivnog ponašanja u kretanju jata ptica pri potrazi za hranom ili preživaljavanjem.
 PSO je nadahnut kretanjem najboljeg člana populacije i njegovog iskustva. Metafora govori da se skup rešenja kreće prostorom pretrage sa ciljem da nađe što bolju poziciju, rešenje \cite{hindawi}.
@@ -139,15 +137,15 @@ način dozvoljavamo jedinki $i$ da traži najbolju oziciju \textbf{$p_i(t)$}, do
 \textbf\textit{$x_i(t+1) = x_i(t) + v_i(t+1)$}
 \end{center} 
 
-\subsubsection{Druga generacija PSO algoritma}
-\label{subsubsec:sgpso}
+\subsection{Druga generacija PSO algoritma}
+\label{subsec:sgpso}
 Druga generacija PSO algoritma je unapređenje originalnog PSO algoritma, koja u obzir uzima tri aspekta: lokalni optimum svih jedinki,
 globalno najbolje rešenje, i novi koncept - geometrijski centar optimalne populacije. Autor knjige \textit{"{}Second Generation Particle Swarm Optimization"} objašnjava da ptice održavaju 
 određenu distancu između centra jata (hrane). Jata ptica uvek ostaju u istom regionu neko vreme, tokom kojeg će centar jata ostati
 nepomeren u očima jedinki. Nakon toga, jato se kreće na sledeći region, tada sve jedinke moraju održati određenu distancu sa centrom jata.
 
-\subsubsection{Novi model PSO-a}
-\label{subsubsec:nmpso}
+\subsection{Novi model PSO-a}
+\label{subsec:nmpso}
 Ovaj algoritam je predložen od strane Garoa (eng. \textit{Garro}), a on ga je bazirao na osnovu ideja drugih autora koji su predlagali unapređenje
 originalnog PSO algoritma. 
 Shi i Eberhart su predlagali linearno variranje inertnih težina kroz generacije, što je znatno unapredilo performanse originalnog PSO algoritma.
@@ -157,7 +155,7 @@ Bazirano na nekim evolutivnim shemama Genetičkih Algoritama, nekoliko efektnih 
 
 
 
-\label{subsubsec:opso}
+\label{subsec:opso}
 
 Vise o PSO. 
 
