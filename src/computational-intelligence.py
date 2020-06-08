@@ -69,7 +69,7 @@ class Particle:
                         if(self.velocity[i][j][k] > self.upper_bound): 
                             self.velocity[i][j][k] = self.upper_bound
         
-        return True
+        return 
     '''
     def check_weights(self):
         
@@ -89,6 +89,10 @@ class Particle:
             
     def get_weights(self):
         return self.weights
+    
+    def set_weights(self, new_weights):
+        self.weights = new_weights
+    
 
 class PSO:
     def __init__(self, num_particles, num_iters, training_x, training_y, model, shapes, c1, c2, w, lower_bound, upper_bound):
@@ -99,9 +103,15 @@ class PSO:
         self.best_particle = self.make_velocity(shapes)
         self.best_evaluation = 0
         self.history = []
+        self.shapes = shapes
+        self.lower_bound = lower_bound
+        self.upper_bound = upper_bound
         self.particles = self.make_particles(num_particles, shapes, c1, c2, w, lower_bound, upper_bound)
         self.evaluate_particles()
         self.combo = 0
+        self.w = w
+        self.c1 = c1
+        self.c2 = c2
         
         
     def make_particles(self, size, shape, c1, c2, w, low, upp):
@@ -182,58 +192,101 @@ class PSO:
                 self.combo += 1
             else:
                 self.combo = 0
+                
+            if(self.combo == 5):
+                self.particles.sort(key = lambda x: x.best_valuation)
+                
+                velocity = self.make_velocity(self.shapes)
+                
+                weights = self.make_weights(self.shapes, self.lower_bound, self.upper_bound)
+                self.particles[0] = Particle(weights, velocity, self.w, self.c1, self.c2, 
+                                             self.lower_bound, self.upper_bound, self.particles[0].id)
+                
+                weights = self.make_weights(self.shapes, self.lower_bound, self.upper_bound)
+                self.particles[1] = Particle(weights, velocity, self.w, self.c1, self.c2, 
+                                             self.lower_bound, self.upper_bound, self.particles[1].id)
+                
+                weights = self.make_weights(self.shapes, self.lower_bound, self.upper_bound)
+                self.particles[2] = Particle(weights, velocity, self.w, self.c1, self.c2, 
+                                             self.lower_bound, self.upper_bound, self.particles[2].id)
+                
+                weights = self.make_weights(self.shapes, self.lower_bound, self.upper_bound)
+                self.particles[3] = Particle(weights, velocity, self.w, self.c1, self.c2, 
+                                             self.lower_bound, self.upper_bound, self.particles[3].id)
+                
+                weights = self.make_weights(self.shapes, self.lower_bound, self.upper_bound)
+                self.particles[4] = Particle(weights, velocity, self.w, self.c1, self.c2, 
+                                             self.lower_bound, self.upper_bound, self.particles[4].id)
+                self.combo = 0
+                self.evaluate_particles()
+                #print("Change bad particles")
+                
+                
+                
             
         return self.best_particle
 
 
-# MAIN - iris
-data = datasets.load_iris()
-#data = datasets.load_breast_cancer()
-
-x_train, x_test, y_train, y_test = train_test_split(data.data, 
-                                                    data.target, 
-                                                    test_size=0.33)
-
-y_train = to_categorical(y_train)
-y_test = to_categorical(y_test)
-
-print('Before scaler:\n', x_train[0])
-
-scaler = preprocessing.StandardScaler()
-scaler.fit(x_train)
-x_train = scaler.transform(x_train)
-x_test = scaler.transform(x_test)
-print('\nAfter scaler:\n', x_train[0])
-
-# Pravljenje neuronske mreze sa 3 sloja - ulazni, skriveni i izlazni
-model = Sequential()
-model.add(Dense(units=100, input_dim=x_train.shape[1], activation='relu'))
-model.add(Dense(units=y_train.shape[1], activation='sigmoid'))
-model.summary()
-
-shapes = [i.shape for i in model.get_weights()]
-
-model.compile(optimizer='adam', 
-              loss=losses.categorical_crossentropy, 
-              metrics=['accuracy'])
-
-best_test_acc = 0
-
-print('Making PSO: ')
-for i in range(3):
-    pso = PSO(20, 10, 
-            x_train, y_train, 
-            model, 
-            shapes, 
-            0.5, 1.0, 0.3, -2, 2)
-    best_particle = pso.start_pso()
+    # MAIN - iris
+def main():
     
-    test_loss, test_acc = model.evaluate(x_test, y_test)
-    
-    if(best_test_acc < test_acc): 
-        best_test_acc = test_acc
-    
-    print("Current PSO test accuracy:   " + str(test_acc) + "\n")
+    data = datasets.load_iris()
+    #data = datasets.load_breast_cancer()
 
-print()
-print("Global best accuracy: " + str(best_test_acc))
+    x_train, x_test, y_train, y_test = train_test_split(data.data, 
+                                                        data.target, 
+                                                        test_size=0.33)
+
+    y_train = to_categorical(y_train)
+    y_test = to_categorical(y_test)
+
+    
+    # Pravljenje neuronske mreze sa 3 sloja - ulazni, skriveni i izlazni
+    model = Sequential()
+    model.add(Dense(units=100, input_dim=x_train.shape[1], activation='relu'))
+    model.add(Dense(units=y_train.shape[1], activation='sigmoid'))
+    model.summary()
+
+    shapes = [i.shape for i in model.get_weights()]
+
+    model.compile(optimizer='adam', 
+                loss=losses.categorical_crossentropy, 
+                metrics=['accuracy'])
+
+    best_test_acc = 0
+    best_pso = None
+    #print('Making PSO: ')
+    
+    PSOS = []
+    for i in range(5):
+        pso = PSO(30, 300, 
+                x_train, y_train, 
+                model, 
+                shapes, 
+                0.5, 1.0, 0.3, -2, 2)
+        
+        PSOS.append(pso)
+        
+    for pso in PSOS:
+        
+        best_particle = pso.start_pso()
+        
+        model.set_weights(best_particle)
+        
+        train_loss, train_acc = model.evaluate(x_train, y_train)
+        test_loss, test_acc = model.evaluate(x_test, y_test)
+        
+        if(best_test_acc < test_acc): 
+            best_test_acc = test_acc
+            best_pso = pso
+        
+        print("Current PSO train accuracy: " + str(train_acc))
+        print("Current PSO test accuracy:   " + str(test_acc) + "\n")
+
+    print()
+    print("Global best accuracy: " + str(best_test_acc))
+    
+    
+
+if __name__ == "__main__":
+    main()
