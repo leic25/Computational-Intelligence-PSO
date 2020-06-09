@@ -13,6 +13,7 @@
 \usepackage[T2A]{fontenc} % enable Cyrillic fonts
 \usepackage[utf8]{inputenc} % make weird characters work
 \usepackage{graphicx}
+\usepackage[]{algorithm2e}
 
 \usepackage[english,serbian]{babel}
 %\usepackage[english,serbianc]{babel} %ukljuciti babel sa ovim opcijama, umesto gornjim, ukoliko se koristi cirilica
@@ -122,20 +123,38 @@ Algoritam PSO (eng. \textit{Particle Swarm Optimization}) je metod za optimizaci
 Sam algoritam je inspirisan posmatranjem socijalnog i kolektivnog ponašanja u kretanju jata ptica pri potrazi za hranom ili preživaljavanjem.
 PSO je nadahnut kretanjem najboljeg člana populacije i njegovog iskustva. Metafora govori da se skup rešenja kreće prostorom pretrage sa ciljem da nađe što bolju poziciju, rešenje \cite{hindawi}.
 \\
-Populacijom se smatra grupa jedinki \textit{i} gde svaka predstavlja poziciju \textbf{\textbf{$x_i \in R^D$, i = 1,...,M}} u višedimenzionom prostoru.
-Jedinke se evaluiraju u posebnoj funkciji optimizacije, kako bi se odredila njihova prilagođenost i sačuvala najbolja vrednost. Svaka jedinka se kreće po
+Populacijom se smatra grupa čestica \textit{i} gde svaka predstavlja poziciju \textbf{\textbf{$x_i \in R^D$, i = 1,...,M}} u višedimenzionom prostoru.
+Čestice se evaluiraju u posebnoj funkciji optimizacije, kako bi se odredila njihova prilagođenost i sačuvala najbolja vrednost. Svaka čestica se kreće po
 prostoru pretrage u zavisnosti od funkcije brzine \textbf{$v_i$} koja u obzir uzima globalno najbolju poziciju u populaciji ($p_g \in R^D$ - socijalna
-komponenta) kao i najbolju poziciju date jedinke ($p_g \in R^D$ - kognitivna komponenta). Jedinke će se kretati u svakoj iteraciji na drugu poziciju,
-dok ne dostignu optimalnu poziciju. U svakom momentu \textit{t}, brzine jedinke \textit{i} se ažurira koristeći: 
+komponenta) kao i najbolju poziciju date čestice ($p_g \in R^D$ - kognitivna komponenta). Čestice će se kretati u svakoj iteraciji na drugu poziciju,
+dok ne dostignu optimalnu poziciju. U svakom momentu \textit{t}, brzina čestice \textit{i} se ažurira koristeći: 
 \begin{center}
 \textbf\textit{$v_i(t+1) = \omega v_i(t) + c_1 r_1(p_i (t) - x_i (t)) + c_2 r_2 (p_g (t) - x_i (t))$}
 \end{center}
 gde je $\omega$ inertna težina i obično je postavljena da varira linearno od 1 do 0 tokom iteracije, $c_1$ i $c_2$ su koeficijenti ubrzanja, $r_1$ i $r_2$
 su slučajni brojevi iz uniformne (0,1) raspodele. Ubrzanje \textbf{$v_i$} je ograničeno između [$v_min, v_max$]. Ažuriranjem ubrzanja na ovaj 
-način dozvoljavamo jedinki $i$ da traži najbolju oziciju \textbf{$p_i(t)$}, dok se najbolje globalno rešenje računa:\cite{hindawi}
+način dozvoljavamo jedinki $i$ da traži najbolju poziciju \textbf{$p_i(t)$}, dok se najbolje globalno rešenje računa:\cite{hindawi}
 \begin{center}
 \textbf\textit{$x_i(t+1) = x_i(t) + v_i(t+1)$}
 \end{center} 
+Optimizacija rojem čestica se može prikazati sledećim pseudokodom:
+
+%Za sva rešenja (čestice)  𝑖  iz skupa rešenja (roja)  𝑋 :
+
+%Izabrati koordinate vektora  𝑥𝑖  uniformno iz intervala  (𝑙,𝑢) 
+%𝑝𝑖=𝑥𝑖 
+%Ako je  𝑓(𝑥𝑖)<𝑓(𝑔)  tada  𝑔=𝑥𝑖 
+%Označiti koordinate vektora  𝑣𝑖  da su jednaki nuli ili uniformno iz %intervala  (−|𝑢−𝑙|,|𝑢−𝑙|) 
+%Dok nije ispunjen kriterijum zaustavljanja:
+
+%Za sve čestice  𝑖  iz roja  𝑋 :
+%Izabrati brojeve  𝑟𝑔  i  𝑟𝑝  uniformno iz intervala  (0,1) 
+%𝑣𝑖=𝑐𝑣𝑣𝑖+𝑐𝑝𝑟𝑝(𝑝𝑖−𝑥𝑖)+𝑐𝑔𝑟𝑔(𝑔−𝑥𝑖) 
+%𝑥𝑖=𝑥𝑖+𝑣𝑖 
+%Ako je  𝑓(𝑥𝑖)<𝑓(𝑝𝑖)  tada  𝑝𝑖=𝑥𝑖 
+%Ako je  𝑓(𝑥𝑖)<𝑓(𝑔)  tada  𝑔=𝑥𝑖 
+%Rešenje je vektor  𝑔 , a vrednost rešenja broj  𝑓(𝑔)
+
 
 \subsection{Druga generacija PSO algoritma}
 \label{subsec:sgpso}
@@ -153,11 +172,34 @@ Yu je razvio strategiju da kada se kroz generacije globalno najbolje rešenje ne
 verovatnoćom a zatim dodat slučajni šum svakom vektoru brzine dimenzije $v_i$ izabrane jedinke \textit{$i$}.
 Bazirano na nekim evolutivnim shemama Genetičkih Algoritama, nekoliko efektnih mutacija i ukrštanja su predložene za PSO.
 
+\section{Podešavanje težina neuronske mreže pomoću optimizacije rojem čestica}
+\label{sec:podesavanjetezina}
+
+Treniranje neuronske mreže, odnosno podešavanje težina, izvršeno je pomoću optimizacije rojem čestica. 
+Napravljena je troslojna neuronska mreža (ulazni, skriveni i izlazni sloj) pomoću Keras biblioteke u Pajtonu, pomoću koje se rešavaju klasifikacioni problemi. Dve trećine podataka korišćene su za trening podatke, a ostatak čini test podatke. Skriveni sloj sadrži 100 jedinica/čvorova, dok je broj izlaza ekvivalentan broju različitih klasa u skupu podataka koji se koristi. Kao metrika korišćena je preciznost (eng. \emph{accurancy}). 
+
+Kao što je ranije napomenuto, ANN trenirana je pomoću PSO algoritma. PSO koristi 30 čestica, prolazi kroz 300 iteracija i šalju se trening podaci i neuronska mreža. Težine neuronske mreže predstavljaju pozicije čestica. Inicijalne težine biraju se nasumično unutar intervala [-2, 2], a ažuriranje težina se vrši prema formuli: {$x_i(t+1) = x_i(t) + v_i(t+1)$}, objašnjenoj u poglavlju \ref{subsec:opso}.  
+
+Kao funkcija cilja korišćena je preciznost. Takođe, u cilju izbegavanja zaglavljivanja u lokalnom minimumu algoritam se pokreće nekoliko puta i pozicije najgorih 5 čestica se nasumično menjaju. Najbolja čestica je upravo ona sa najvećom preciznošću.
+
+\textit{Ovim poglavljem opišite sve relevantne aspekte vašeg rada: npr. opšti rad algoritma, način kodiranja rešenja i funkciju cilja u slučaju da radite optimizacionu tehniku, itd. Budite objektivni i pošteni u opisu svoje metode i jasno ukažite na to da ste reprodukovali pristup koji je neko već osmislio pre vas tako što ćete ubaciti odgovarajuće reference ka svim relevantnim radovima.}
 
 
-\label{subsec:opso}
+\subsection{Rezultati}
+\label{rezultati}
 
-Vise o PSO. 
+U ovoj sekciji biće predstavljeni eksperimentalni rezultati dobijeni nad skupovima: Iris, Breast Cancer i Wine, kao i upoređeni sa rezultatima drugih istraživača koji su se bavili ovom temom i koristili navedene skupove. 
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[scale=0.5]{download.png}
+\end{center}
+\caption{Preciznost na test podacima skupova: iris, breast cancer i wine.}
+\label{fig:preciznost}
+\end{figure}
+
+\textit{Ovo poglavlje sadrži tabele i grafike kojim upoređujete vaš pristup sa drugim pristupima iz literature. Pronaći relevantne test primere (instance) I testirati predloženu metodu (metode) na njima, ukoliko su dostupne. Ako ne možete da dođete do test primera iz literature, kreirajte na osnovu opisa iz radova test primere koji su im slični. Testirajte vaše metode pod sličnim uslovima kao i autori iz literature. Pri demonstraciji rada metode uvek pokazati kako vaša metoda radi na na jednostavnim test primerima koji se mogu vizualizovati. Specijalno, ako ne upoređujete rešenje sa drugim rešenjima, možete komentarisati efikasnost algoritma i procenijvati kvalitet tako što ga upoređujete sa drugim pristupima koje ste sami razvili (npr. algoritmom potpune pretrage, eng. brute-force u slučaju da radite optimizacionu tehniku). Budite objektivni i pošteni u prikazu svojih rezultata i jasno naznačite ako vaš pristup nije bolji (što je vrlo verovatno) od onih koji su predloženi u literaturi. U okviru ovog poglavlja opišite i eksperimentalno okruženje u kojem ste testirali vaš program, karakteristike hardvera, operativni sistem, kompajler, itd. }
+
 
 
 \section{Zaključak}
