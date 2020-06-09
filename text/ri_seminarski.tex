@@ -137,7 +137,7 @@ način dozvoljavamo jedinki $i$ da traži najbolju poziciju \textbf{$p_i(t)$}, d
 \begin{center}
 \textbf\textit{$x_i(t+1) = x_i(t) + v_i(t+1)$}
 \end{center} 
-Optimizacija rojem čestica se može prikazati sledećim pseudokodom:
+% Optimizacija rojem čestica se može prikazati sledećim pseudokodom:
 
 %Za sva rešenja (čestice)  𝑖  iz skupa rešenja (roja)  𝑋 :
 
@@ -176,19 +176,29 @@ Bazirano na nekim evolutivnim shemama Genetičkih Algoritama, nekoliko efektnih 
 \label{sec:podesavanjetezina}
 
 Treniranje neuronske mreže, odnosno podešavanje težina, izvršeno je pomoću optimizacije rojem čestica. 
-Napravljena je troslojna neuronska mreža (ulazni, skriveni i izlazni sloj) pomoću Keras biblioteke u Pajtonu, pomoću koje se rešavaju klasifikacioni problemi. Dve trećine podataka korišćene su za trening podatke, a ostatak čini test podatke. Skriveni sloj sadrži 100 jedinica/čvorova, dok je broj izlaza ekvivalentan broju različitih klasa u skupu podataka koji se koristi. Kao metrika korišćena je preciznost (eng. \emph{accurancy}). 
+Napravljena je troslojna neuronska mreža (ulazni, skriveni i izlazni sloj) pomoću Keras biblioteke u Pajtonu, pomoću koje se rešavaju klasifikacioni problemi. Dve trećine podataka korišćene su za trening podatke, a ostatak čini test podatke. Skriveni sloj sadrži 100 jedinica/čvorova, dok je broj izlaza ekvivalentan broju različitih klasa u odgovarajućem skupu podataka. Kao metrika korišćena je preciznost (eng. \emph{accurancy}). 
 
-Kao što je ranije napomenuto, ANN trenirana je pomoću PSO algoritma. PSO koristi 30 čestica, prolazi kroz 300 iteracija i šalju se trening podaci i neuronska mreža. Težine neuronske mreže predstavljaju pozicije čestica. Inicijalne težine biraju se nasumično unutar intervala [-2, 2], a ažuriranje težina se vrši prema formuli: {$x_i(t+1) = x_i(t) + v_i(t+1)$}, objašnjenoj u poglavlju \ref{subsec:opso}.  
+Kao što je ranije napomenuto, ANN trenirana je pomoću PSO algoritma. PSO koristi 30 čestica, prolazi kroz 300 iteracija i šalju se trening podaci i neuronska mreža. Težine neuronske mreže predstavljaju pozicije čestica. Inicijalne težine biraju se nasumično unutar intervala [-2, 2], a ažuriranje težina se vrši prema formuli: {$x_i(t+1) = x_i(t) + v_i(t+1)$}, objašnjenoj u poglavlju \ref{subsec:opso}. Parametri c1, c2 i w izabrani su u odnosu na vrednosti istih tih parametara u radu \cite{hindawi}, odnosno w je 0.3, dok su c1 i c2 za 0.5 veći, jer tako algoritam daje bolje rezultate. 
 
 Kao funkcija cilja korišćena je preciznost. Takođe, u cilju izbegavanja zaglavljivanja u lokalnom minimumu algoritam se pokreće nekoliko puta i pozicije najgorih 5 čestica se nasumično menjaju. Najbolja čestica je upravo ona sa najvećom preciznošću.
-
-\textit{Ovim poglavljem opišite sve relevantne aspekte vašeg rada: npr. opšti rad algoritma, način kodiranja rešenja i funkciju cilja u slučaju da radite optimizacionu tehniku, itd. Budite objektivni i pošteni u opisu svoje metode i jasno ukažite na to da ste reprodukovali pristup koji je neko već osmislio pre vas tako što ćete ubaciti odgovarajuće reference ka svim relevantnim radovima.}
-
 
 \subsection{Rezultati}
 \label{rezultati}
 
-U ovoj sekciji biće predstavljeni eksperimentalni rezultati dobijeni nad skupovima: Iris, Breast Cancer i Wine, kao i upoređeni sa rezultatima drugih istraživača koji su se bavili ovom temom i koristili navedene skupove. 
+U ovoj sekciji biće predstavljeni eksperimentalni rezultati dobijeni nad skupovima: Iris, Breast Cancer i Wine, kao i upoređeni sa rezultatima drugih istraživača koji su se bavili ovom temom i koristili navedene skupove \cite{hindawi}. U nastavku sledi više o rezultatima na svakom od njih pojedinačno.
+
+\subsubsection{Skup Iris}
+\label{iris}
+
+Ovaj skup podataka nalazi se u Pajton paketu za mašinsko učenje: Scikit-learn. Sastoji se od 3 vrste cveta Iris - Setosa, Versicolour, Virginica. Sadrži 150 instanci i ima 5 atributa koji predstavljaju dužinu i širinu latica (eng. \emph{petal length, petal width}), dužinu čašičnog listića (eng. \emph{sepal length, sepal width}) i vrstu kojoj cvet pripada (eng. \emph{species}). 
+
+
+\subsubsection{Skup Breast cancer}
+\label{breast}
+
+\subsubsection{Skup Wine}
+\label{wine}
+
 
 \begin{figure}[h!]
 \begin{center}
