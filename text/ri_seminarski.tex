@@ -84,9 +84,13 @@ Ovde ide neki uvod
 \section{Neuronske mreže}
 \label{neuronskemreze}
 
-Neuronska mreža (eng. \emph{Artificial Neural Networks, ANN}) je sistem koji vrši mapiranje između ulaza i izlaza problema. Neuronske mreže zapravo predstavljaju parametrizovanu reprezentaciju koja se može koristiti za aproksimaciju raznih funkcija \cite{hindawi}. Matematičkom optimizacijom nekog od kriterijuma kvaliteta vrši se pronalaženje odgovarajućih parametara. 
+Neuronska mreža (eng. \emph{Artificial Neural Networks, ANN}) je sistem koji vrši mapiranje između ulaza i izlaza problema.
+Neuronske mreže zapravo predstavljaju parametrizovanu reprezentaciju koja se može koristiti za aproksimaciju raznih funkcija \cite{hindawi}.
+Matematičkom optimizacijom nekog od kriterijuma kvaliteta vrši se pronalaženje odgovarajućih parametara. 
 
-Neuronske mreže uče informacije kroz proces treniranja u nekoliko iteracija. Kada je proces učenja završen, neuronska mreža je spremna i sposobna da klasifikuje nove informacije, predvidi ponašanje, ili aproksimira nelinearnu funkciju problema. Njena struktura sastoji se od skupa neurona, predstavljenih
+Neuronske mreže uče informacije kroz proces treniranja u nekoliko iteracija. Kada je proces učenja završen, 
+neuronska mreža je spremna i sposobna da klasifikuje nove informacije, predvidi ponašanje, ili aproksimira nelinearnu funkciju problema. 
+Njena struktura sastoji se od skupa neurona, predstavljenih
 funkcijama, koji su međusobno povezani sa ostalim neuronim organizovanim u slojevima. 
 
 Struktura neuronske mreže se razlikuje po broju slojeva. Prvi sloj jeste ulazni sloj, poslednji sloj jeste izlazni, a svi slojevi između se nazivaju skrivenim
@@ -104,16 +108,21 @@ prirodnih jezika, prepoznavanje rukom pisanih tekstova itd.
 \subsection{Keras Pajton biblioteka}
 \label{subsec:keras}
 
-Keras je biblioteka za neuronske mreže, napisana u Pajtonu. Keras radi na platformi za mašinsko učenje  \textit{TensorFlow}. Razvijena je sa ciljem da omogući brzo eksperimentisanje sa neuronskim mrežama \cite{keraswebsite}, da bude razumljiva, modularna i proširiva.
+Keras je biblioteka za neuronske mreže, napisana u Pajtonu. Keras radi na platformi za mašinsko učenje  \textit{TensorFlow}.
+Razvijena je sa ciljem da omogući brzo eksperimentisanje sa neuronskim mrežama \cite{keraswebsite},
+da bude razumljiva, modularna i proširiva.
 
-Pored, već pomenute, \textit{TensorFlow} platforme, ova biblioteka radi i na: \textit{Microsoft Cognitive Toolkit, R, Theano, ili PlaidML} platformama. Nastala je kao deo istraživanja u okviru projekta ONEIROS (eng. \emph{Open-ended Neuro-Electronic Intelligent Robot Operating System}), a njen autor i održavaoc je gugl inženjer -  François Chollet.
+Pored, već pomenute, \textit{TensorFlow} platforme, ova biblioteka radi i na: \textit{Microsoft Cognitive Toolkit, R, Theano, ili PlaidML} platformama. 
+Nastala je kao deo istraživanja u okviru projekta ONEIROS (eng. \emph{Open-ended Neuro-Electronic Intelligent Robot Operating System}), 
+a njen autor i održavaoc je gugl inženjer -  François Chollet.
 % \begin{verbatim}
 % ščćžđ
 % \end{verbatim}
 
 \section{Optimizacija rojem čestica}
 \label{subsec:pso}
-U ovoj sekcije biće objašnjen sam algoritam optimizacije rojem čestica. Najviše vremena biće posvećeno originalnom algoritmu PSO, a kao i drugoj generaciji algoritma PSO (eng. \textit{The Secong Generation of PSO}), kao i novom modelu algoritma PSO 
+U ovoj sekcije biće objašnjen sam algoritam optimizacije rojem čestica. Najviše vremena biće posvećeno originalnom algoritmu PSO,
+a kao i drugoj generaciji algoritma PSO (eng. \textit{The Secong Generation of PSO}), kao i novom modelu algoritma PSO 
 (eng. \textit{A New Model of PSO}).
 
 
@@ -176,21 +185,36 @@ Bazirano na nekim evolutivnim shemama Genetičkih Algoritama, nekoliko efektnih 
 \label{sec:podesavanjetezina}
 
 Treniranje neuronske mreže, odnosno podešavanje težina, izvršeno je pomoću optimizacije rojem čestica. 
-Napravljena je troslojna neuronska mreža (ulazni, skriveni i izlazni sloj) pomoću Keras biblioteke u Pajtonu, pomoću koje se rešavaju klasifikacioni problemi. Dve trećine podataka korišćene su za trening podatke, a ostatak čini test podatke. Skriveni sloj sadrži 100 jedinica/čvorova, dok je broj izlaza ekvivalentan broju različitih klasa u odgovarajućem skupu podataka. Kao metrika korišćena je preciznost (eng. \emph{accurancy}). 
+Napravljena je troslojna neuronska mreža (ulazni, skriveni i izlazni sloj) pomoću Keras biblioteke u Pajtonu, 
+pomoću koje se rešavaju klasifikacioni problemi. Dve trećine podataka korišćene su za trening podatke, a ostatak čini test podatke. 
+Skriveni sloj sadrži 100 jedinica/čvorova, dok je broj izlaza ekvivalentan b
+roju različitih klasa u odgovarajućem skupu podataka. Kao metrika korišćena je preciznost (eng. \emph{accurancy}). 
 
-Kao što je ranije napomenuto, ANN trenirana je pomoću PSO algoritma. PSO koristi 30 čestica, prolazi kroz 300 iteracija i šalju se trening podaci i neuronska mreža. Težine neuronske mreže predstavljaju pozicije čestica. Inicijalne težine biraju se nasumično unutar intervala [-2, 2], a ažuriranje težina se vrši prema formuli: {$x_i(t+1) = x_i(t) + v_i(t+1)$}, objašnjenoj u poglavlju \ref{subsec:opso}. Parametri c1, c2 i w izabrani su u odnosu na vrednosti istih tih parametara u radu \cite{hindawi}, odnosno w je 0.3, dok su c1 i c2 za 0.5 veći, jer tako algoritam daje bolje rezultate. 
+Kao što je ranije napomenuto, ANN trenirana je pomoću PSO algoritma. PSO koristi 30 čestica, prolazi kroz 300 iteracija i šalju se trening 
+podaci i neuronska mreža. Težine neuronske mreže predstavljaju pozicije čestica. Inicijalne težine biraju se nasumično unutar intervala [-2, 2], 
+a ažuriranje težina se vrši prema formuli: 
+\begin{center}
+{$x_i(t+1) = x_i(t) + v_i(t+1)$}
+\end{center}
+objašnjenoj u poglavlju \ref{subsec:opso}. Parametri c1, c2 i w izabrani su u odnosu na vrednosti istih tih parametara u radu \cite{hindawi},
+odnosno w je 0.3, dok su c1 i c2 za 0.5 manji, jer tako algoritam daje bolje rezultate. 
 
-Kao funkcija cilja korišćena je preciznost. Takođe, u cilju izbegavanja zaglavljivanja u lokalnom minimumu algoritam se pokreće nekoliko puta i pozicije najgorih 5 čestica se nasumično menjaju. Najbolja čestica je upravo ona sa najvećom preciznošću.
+Kao funkcija cilja korišćena je preciznost. Takođe, u cilju izbegavanja zaglavljivanja u lokalnom minimumu algoritam se pokreće nekoliko puta i 
+pozicije najgorih 5 čestica se nasumično menjaju. Najbolja čestica je upravo ona sa najvećom preciznošću.
 
 \subsection{Rezultati}
 \label{rezultati}
 
-U ovoj sekciji biće predstavljeni eksperimentalni rezultati dobijeni nad skupovima: Iris, Breast Cancer i Wine, kao i upoređeni sa rezultatima drugih istraživača koji su se bavili ovom temom i koristili navedene skupove \cite{hindawi}. U nastavku sledi više o rezultatima na svakom od njih pojedinačno.
+U ovoj sekciji biće predstavljeni eksperimentalni rezultati dobijeni nad skupovima: Iris, Breast Cancer i Wine, kao i 
+upoređeni sa rezultatima drugih istraživača koji su se bavili ovom temom i koristili navedene skupove \cite{hindawi}. 
+U nastavku sledi više o rezultatima na svakom od njih pojedinačno.
 
 \subsubsection{Skup Iris}
 \label{iris}
 
-Ovaj skup podataka nalazi se u Pajton paketu za mašinsko učenje: Scikit-learn. Sastoji se od 3 vrste cveta Iris - Setosa, Versicolour, Virginica. Sadrži 150 instanci i ima 5 atributa koji predstavljaju dužinu i širinu latica (eng. \emph{petal length, petal width}), dužinu čašičnog listića (eng. \emph{sepal length, sepal width}) i vrstu kojoj cvet pripada (eng. \emph{species}). 
+Ovaj skup podataka nalazi se u Pajton paketu za mašinsko učenje: Scikit-learn. Sastoji se od 3 vrste cveta Iris - Setosa, Versicolour, Virginica. 
+Sadrži 150 instanci i ima 5 atributa koji predstavljaju dužinu i širinu latica (eng. \emph{petal length, petal width}), dužinu čašičnog listića 
+(eng. \emph{sepal length, sepal width}) i vrstu kojoj cvet pripada (eng. \emph{species}). 
 
 
 \subsubsection{Skup Breast cancer}
@@ -208,7 +232,15 @@ Ovaj skup podataka nalazi se u Pajton paketu za mašinsko učenje: Scikit-learn.
 \label{fig:preciznost}
 \end{figure}
 
-\textit{Ovo poglavlje sadrži tabele i grafike kojim upoređujete vaš pristup sa drugim pristupima iz literature. Pronaći relevantne test primere (instance) I testirati predloženu metodu (metode) na njima, ukoliko su dostupne. Ako ne možete da dođete do test primera iz literature, kreirajte na osnovu opisa iz radova test primere koji su im slični. Testirajte vaše metode pod sličnim uslovima kao i autori iz literature. Pri demonstraciji rada metode uvek pokazati kako vaša metoda radi na na jednostavnim test primerima koji se mogu vizualizovati. Specijalno, ako ne upoređujete rešenje sa drugim rešenjima, možete komentarisati efikasnost algoritma i procenijvati kvalitet tako što ga upoređujete sa drugim pristupima koje ste sami razvili (npr. algoritmom potpune pretrage, eng. brute-force u slučaju da radite optimizacionu tehniku). Budite objektivni i pošteni u prikazu svojih rezultata i jasno naznačite ako vaš pristup nije bolji (što je vrlo verovatno) od onih koji su predloženi u literaturi. U okviru ovog poglavlja opišite i eksperimentalno okruženje u kojem ste testirali vaš program, karakteristike hardvera, operativni sistem, kompajler, itd. }
+\textit{Ovo poglavlje sadrži tabele i grafike kojim upoređujete vaš pristup sa drugim pristupima iz literature. Pronaći relevantne test 
+primere (instance) I testirati predloženu metodu (metode) na njima, ukoliko su dostupne. Ako ne možete da dođete do test primera iz 
+literature, kreirajte na osnovu opisa iz radova test primere koji su im slični. Testirajte vaše metode pod sličnim uslovima kao i autori iz 
+literature. Pri demonstraciji rada metode uvek pokazati kako vaša metoda radi na na jednostavnim test primerima koji se mogu 
+vizualizovati. Specijalno, ako ne upoređujete rešenje sa drugim rešenjima, možete komentarisati efikasnost algoritma i procenijvati
+kvalitet tako što ga upoređujete sa drugim pristupima koje ste sami razvili (npr. algoritmom potpune pretrage, eng. brute-force u slučaju
+da radite optimizacionu tehniku). Budite objektivni i pošteni u prikazu svojih rezultata i jasno naznačite ako vaš pristup nije bolji 
+(što je vrlo verovatno) od onih koji su predloženi u literaturi. U okviru ovog poglavlja opišite i eksperimentalno okruženje u kojem 
+ste testirali vaš program, karakteristike hardvera, operativni sistem, kompajler, itd. }
 
 
 
