@@ -142,7 +142,7 @@ dok ne dostignu optimalnu poziciju. U svakom momentu \textit{t}, brzina čestice
 \end{center}
 gde je $\omega$ inertna težina i obično je postavljena da varira linearno od 1 do 0 tokom iteracije, $c_1$ i $c_2$ su koeficijenti ubrzanja, $r_1$ i $r_2$
 su slučajni brojevi iz uniformne (0,1) raspodele. Ubrzanje \textbf{$v_i$} je ograničeno između [$v_min, v_max$]. Ažuriranjem ubrzanja na ovaj 
-način dozvoljavamo jedinki $i$ da traži najbolju poziciju \textbf{$p_i(t)$}, dok se najbolje globalno rešenje računa:\cite{hindawi}
+način dozvoljavamo jedinki $i$ da traži najbolju poziciju \textbf{$p_i(t)$}, dok se najbolje globalno rešenje računa \cite{hindawi}:
 \begin{center}
 \textbf\textit{$x_i(t+1) = x_i(t) + v_i(t+1)$}
 \end{center} 
@@ -167,47 +167,34 @@ način dozvoljavamo jedinki $i$ da traži najbolju poziciju \textbf{$p_i(t)$}, d
 
 \subsection{Druga generacija PSO algoritma}
 \label{subsec:sgpso}
-Druga generacija PSO algoritma je unapređenje originalnog PSO algoritma, koja u obzir uzima tri aspekta: lokalni optimum svih jedinki,
-globalno najbolje rešenje, i novi koncept - geometrijski centar optimalne populacije. Autor knjige \textit{"{}Second Generation Particle Swarm Optimization"} objašnjava da ptice održavaju 
-određenu distancu između centra jata (hrane). Jata ptica uvek ostaju u istom regionu neko vreme, tokom kojeg će centar jata ostati
-nepomeren u očima jedinki. Nakon toga, jato se kreće na sledeći region, tada sve jedinke moraju održati određenu distancu sa centrom jata.
+
+Druga generacija PSO algoritma je unapređenje originalnog PSO algoritma, koja u obzir uzima tri aspekta: lokalni optimum svih čestica, globalno najbolje rešenje, i novi koncept - geometrijski centar optimalne populacije. Autor knjige \textit{"{}Second Generation Particle Swarm Optimization"} objašnjava da ptice održavaju  određenu distancu između centra jata (hrane). Jata ptica uvek ostaju u istom regionu neko vreme, tokom kojeg će centar jata ostati nepomeren u očima jedinki. Nakon toga, jato se kreće na sledeći region, tada sve jedinke moraju održati određenu distancu sa centrom jata.
 
 \subsection{Novi model PSO-a}
 \label{subsec:nmpso}
-Ovaj algoritam je predložen od strane Garoa (eng. \textit{Garro}), a on ga je bazirao na osnovu ideja drugih autora koji su predlagali unapređenje
-originalnog PSO algoritma. 
-Shi i Eberhart su predlagali linearno variranje inertnih težina kroz generacije, što je znatno unapredilo performanse originalnog PSO algoritma.
-Yu je razvio strategiju da kada se kroz generacije globalno najbolje rešenje ne poboljšava, svaka jedinka \textit{$i$} biva izabrana sa predefinisanom
-verovatnoćom a zatim dodat slučajni šum svakom vektoru brzine dimenzije $v_i$ izabrane jedinke \textit{$i$}.
-Bazirano na nekim evolutivnim shemama Genetičkih Algoritama, nekoliko efektnih mutacija i ukrštanja su predložene za PSO.
+
+Ovaj algoritam je predložio Garo (eng. \textit{Garro}), bazirao ga je na osnovu ideja drugih autora koji su predlagali unapređenje originalnog PSO algoritma. Shi i Eberhart su predlagali linearno variranje inertnih težina kroz generacije, što je znatno unapredilo performanse originalnog PSO algoritma.
+Yu je razvio strategiju da kada se kroz generacije globalno najbolje rešenje ne poboljšava, svaka čestica \textit{$i$} biva izabrana sa predefinisanom verovatnoćom, a zatim je dodat slučajni šum svakom vektoru brzine dimenzije $v_i$ izabrane čestice \textit{$i$}. Bazirano na nekim evolutivnim shemama Genetičkih algoritama, nekoliko efektnih mutacija i ukrštanja su predložene za PSO.
 
 \section{Podešavanje težina neuronske mreže pomoću optimizacije rojem čestica}
 \label{sec:podesavanjetezina}
 
 Treniranje neuronske mreže, odnosno podešavanje težina, izvršeno je pomoću optimizacije rojem čestica. 
-Napravljena je troslojna neuronska mreža (ulazni, skriveni i izlazni sloj) pomoću Keras biblioteke u Pajtonu, 
-pomoću koje se rešavaju klasifikacioni problemi. Dve trećine podataka korišćene su za trening podatke, a ostatak čini test podatke. 
-Skriveni sloj sadrži 100 jedinica/čvorova, dok je broj izlaza ekvivalentan b
-roju različitih klasa u odgovarajućem skupu podataka. Kao metrika korišćena je preciznost (eng. \emph{accurancy}). 
+Napravljena je troslojna neuronska mreža (ulazni, skriveni i izlazni sloj) pomoću Keras biblioteke u Pajtonu, pomoću koje se rešavaju klasifikacioni problemi. Dve trećine podataka korišćene su za trening podatke, a ostatak čini test podatke. Skriveni sloj sadrži 100 jedinica/čvorova, dok je broj izlaza ekvivalentan broju različitih klasa u odgovarajućem skupu podataka. Kao metrika korišćena je preciznost (eng. \emph{accurancy}). 
 
-Kao što je ranije napomenuto, ANN trenirana je pomoću PSO algoritma. PSO koristi 30 čestica, prolazi kroz 300 iteracija i šalju se trening 
-podaci i neuronska mreža. Težine neuronske mreže predstavljaju pozicije čestica. Inicijalne težine biraju se nasumično unutar intervala [-2, 2], 
-a ažuriranje težina se vrši prema formuli: 
+Kao što je ranije napomenuto, ANN trenirana je pomoću PSO algoritma. PSO koristi 50 čestica, prolazi kroz 1000 iteracija i šalju se trening podaci i neuronska mreža. Težine neuronske mreže predstavljaju pozicije čestica. Inicijalne težine biraju se nasumično unutar intervala [-2, 2], a ažuriranje težina se vrši prema formuli: 
 \begin{center}
 {$x_i(t+1) = x_i(t) + v_i(t+1)$}
 \end{center}
-objašnjenoj u poglavlju \ref{subsec:opso}. Parametri c1, c2 i w izabrani su u odnosu na vrednosti istih tih parametara u radu \cite{hindawi},
-odnosno w je 0.3, dok su c1 i c2 za 0.5 manji, jer tako algoritam daje bolje rezultate. 
+objašnjenoj u poglavlju \ref{subsec:opso}. Parametri $c_1$, $c_2$ i $w$ izabrani su u odnosu na vrednosti istih tih parametara u radu \cite{hindawi},
+odnosno $w$ je 0.3, dok su $c_1$ i $c_2$ za 0.5 manji, jer tako algoritam daje bolje rezultate. 
 
-Kao funkcija cilja korišćena je preciznost. Takođe, u cilju izbegavanja zaglavljivanja u lokalnom minimumu algoritam se pokreće nekoliko puta i 
-pozicije najgorih 5 čestica se nasumično menjaju. Najbolja čestica je upravo ona sa najvećom preciznošću.
+Kao funkcija cilja korišćena je preciznost. Takođe, u cilju izbegavanja zaglavljivanja u lokalnom minimumu algoritam se pokreće nekoliko puta i pozicije najgorih pet čestica se nasumično menjaju. Najbolja čestica je upravo ona sa najvećom preciznošću.
 
 \subsection{Rezultati}
 \label{rezultati}
 
-U ovoj sekciji biće predstavljeni eksperimentalni rezultati dobijeni nad skupovima: Iris, Breast Cancer i Wine, kao i 
-upoređeni sa rezultatima drugih istraživača koji su se bavili ovom temom i koristili navedene skupove \cite{hindawi}. 
-U nastavku sledi više o rezultatima na svakom od njih pojedinačno.
+U ovoj sekciji biće predstavljeni eksperimentalni rezultati dobijeni nad skupovima: \textit{Iris, Breast Cancer i Wine}, kao i upoređeni sa rezultatima drugih istraživača koji su se bavili ovom temom i koristili navedene skupove \cite{hindawi}. U nastavku sledi više o rezultatima na svakom od njih pojedinačno.
 
 \subsubsection{Skup Iris}
 \label{iris}
@@ -216,31 +203,73 @@ Ovaj skup podataka nalazi se u Pajton paketu za mašinsko učenje: Scikit-learn.
 Sadrži 150 instanci i ima 5 atributa koji predstavljaju dužinu i širinu latica (eng. \emph{petal length, petal width}), dužinu čašičnog listića 
 (eng. \emph{sepal length, sepal width}) i vrstu kojoj cvet pripada (eng. \emph{species}). 
 
+Preciznost neuronske mreže, koja je dobijena na skupu Iris, najveća je od svih testiranih i ona iznosi vise od 95\%, kako na trening, tako i na test podacima. Na slici \ref{fig:irisslika} može se videti i zaključiti da je dobijena preciznost autora ovog rada i preciznost autora ranije pomenutog rada \cite{hindawi} približno ista.
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[scale=0.5]{img/iriswrr.png}
+\end{center}
+\caption{Preciznost na trening i test podacima skupa Iris.}
+\label{fig:irisslika}
+\end{figure}
 
 \subsubsection{Skup Breast cancer}
 \label{breast}
 
-\subsubsection{Skup Wine}
-\label{wine}
+Skup podataka Breast cancer se, takođe, nalazi u Pajton paketu za mašinsko učenje: Scikit-learn. Predstavlja jednostavan skup podataka koji se koristi za binarnu klasifikaciju. Više informacija o skupu dato je u tabeli.
 
+\begin{center}
+Tabela 1: Informacije o skupu Breast Cancer
+\begin{tabular}{|p{4cm}|p{2cm}|}
+\hline
+Klase             & 2              \\ \hline
+Instance po klasi & 212(M), 357(B) \\ \hline
+Ukupno instanci   & 569            \\ \hline
+Dimenzija         & 30             \\ \hline
+Atributi          & real, positive \\ \hline
+\end{tabular}\par
+\bigskip
+\end{center} 
+
+Rezultati dobijeni na neuronskoj mreži za skup Breast Cancer neznatno su slabiji od rezultata nad skupom podataka Iris. Njihova preciznost iznosi oko 90\%. Na slici \ref{fig:breastslika} može se videti poređenje rezultata:
 
 \begin{figure}[h!]
 \begin{center}
-\includegraphics[scale=0.5]{download.png}
+\includegraphics[scale=0.5]{img/bcwrr.png}
 \end{center}
-\caption{Preciznost na test podacima skupova: iris, breast cancer i wine.}
-\label{fig:preciznost}
+\caption{Preciznost na trening i test podacima skupa Breast Cancer.}
+\label{fig:breastslika}
 \end{figure}
 
-\textit{Ovo poglavlje sadrži tabele i grafike kojim upoređujete vaš pristup sa drugim pristupima iz literature. Pronaći relevantne test 
-primere (instance) I testirati predloženu metodu (metode) na njima, ukoliko su dostupne. Ako ne možete da dođete do test primera iz 
-literature, kreirajte na osnovu opisa iz radova test primere koji su im slični. Testirajte vaše metode pod sličnim uslovima kao i autori iz 
-literature. Pri demonstraciji rada metode uvek pokazati kako vaša metoda radi na na jednostavnim test primerima koji se mogu 
-vizualizovati. Specijalno, ako ne upoređujete rešenje sa drugim rešenjima, možete komentarisati efikasnost algoritma i procenijvati
-kvalitet tako što ga upoređujete sa drugim pristupima koje ste sami razvili (npr. algoritmom potpune pretrage, eng. brute-force u slučaju
-da radite optimizacionu tehniku). Budite objektivni i pošteni u prikazu svojih rezultata i jasno naznačite ako vaš pristup nije bolji 
-(što je vrlo verovatno) od onih koji su predloženi u literaturi. U okviru ovog poglavlja opišite i eksperimentalno okruženje u kojem 
-ste testirali vaš program, karakteristike hardvera, operativni sistem, kompajler, itd. }
+
+
+\subsubsection{Skup Wine}
+\label{wine}
+
+Wine skup podataka predstavlja klasičan, jednostavan i višeklasni klasifikacioni skup podataka u paketu za Scikit-learn. 
+
+\begin{center}
+Tabela 2: Informacije o skupu Wine\\
+\begin{tabular}{|p{4cm}|p{2cm}|}
+\hline
+Klase             & 3              \\ \hline
+Instance po klasi & 59,71,48       \\ \hline
+Ukupno instanci   & 178            \\ \hline
+Dimenzija         & 13             \\ \hline
+Atributi          & real, positive \\ \hline
+\end{tabular}\par
+\bigskip
+\end{center} 
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[scale=0.5]{img/winewrr.png}
+\end{center}
+\caption{Preciznost na trening i test podacima skupa Wine.}
+\label{fig:wineslika}
+\end{figure}
+
+\textit{ Budite objektivni i pošteni u prikazu svojih rezultata i jasno naznačite ako vaš pristup nije bolji (što je vrlo verovatno) od onih koji su predloženi u literaturi. U okviru ovog poglavlja opišite i eksperimentalno okruženje u kojem ste testirali vaš program, karakteristike hardvera, operativni sistem, kompajler, itd. }
 
 
 
