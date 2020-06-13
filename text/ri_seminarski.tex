@@ -180,9 +180,9 @@ Yu je razvio strategiju da kada se kroz generacije globalno najbolje rešenje ne
 \label{sec:podesavanjetezina}
 
 Treniranje neuronske mreže, odnosno podešavanje težina, izvršeno je pomoću optimizacije rojem čestica. 
-Napravljena je troslojna neuronska mreža (ulazni, skriveni i izlazni sloj) pomoću Keras biblioteke u Pajtonu, pomoću koje se rešavaju klasifikacioni problemi. Dve trećine podataka korišćene su za trening podatke, a ostatak čini test podatke. Skriveni sloj sadrži 100 jedinica/čvorova, dok je broj izlaza ekvivalentan broju različitih klasa u odgovarajućem skupu podataka. Kao metrika korišćena je preciznost (eng. \emph{accurancy}). 
+Napravljena je troslojna neuronska mreža (ulazni, skriveni i izlazni sloj) pomoću Keras biblioteke u Pajtonu, pomoću koje se rešavaju klasifikacioni problemi. Dve trećine podataka korišćene su za trening podatke, a ostatak čini test podatke. Skriveni sloj sadrži 100 jedinica/čvorova, dok je broj izlaza ekvivalentan broju različitih klasa u odgovarajućem skupu podataka. Pri kompiliranju Keras modela korišćen je \textit{adam} optimizator, ali on nema nikakvog uticaja, već je naveden iz sintaksnih razloga. Kao metrika korišćena je preciznost (eng. \emph{accurancy}). 
 
-Kao što je ranije napomenuto, ANN trenirana je pomoću PSO algoritma. PSO koristi 50 čestica, prolazi kroz 1000 iteracija i šalju se trening podaci i neuronska mreža. Težine neuronske mreže predstavljaju pozicije čestica. Inicijalne težine biraju se nasumično unutar intervala [-2, 2], a ažuriranje težina se vrši prema formuli: 
+Kao što je ranije napomenuto, ANN trenirana je pomoću PSO algoritma. PSO koristi prvo 30, čestica i 300 iteracija, a zatim 50 čestica i 1000 iteracija. Šalju se trening podaci i neuronska mreža. Težine neuronske mreže predstavljaju pozicije čestica. Inicijalne težine biraju se nasumično unutar intervala [-2, 2], a ažuriranje težina se vrši prema formuli: 
 \begin{center}
 {$x_i(t+1) = x_i(t) + v_i(t+1)$}
 \end{center}
@@ -194,29 +194,32 @@ Kao funkcija cilja korišćena je preciznost. Takođe, u cilju izbegavanja zagla
 \subsection{Rezultati}
 \label{rezultati}
 
-U ovoj sekciji biće predstavljeni eksperimentalni rezultati dobijeni nad skupovima: \textit{Iris, Breast Cancer i Wine}, kao i upoređeni sa rezultatima drugih istraživača koji su se bavili ovom temom i koristili navedene skupove \cite{hindawi}. U nastavku sledi više o rezultatima na svakom od njih pojedinačno.
+U ovoj sekciji biće predstavljeni eksperimentalni rezultati dobijeni nad skupovima: \textit{Iris, Breast Cancer i Wine}, kao i upoređeni sa rezultatima drugih istraživača koji su se bavili ovom temom i koristili navedene skupove \cite{hindawi}. Stopa prepoznavanja neuronske mreže procenjena je i računata formulom:
+\begin{center}
+{$wrr = 0.4*(Tr_r r) + 0.6*(Te_r r)$}, 
+\end{center}
+gde je $Tr_r r$ preciznost nad trening podacima, a $Te_r r$ preciznost dobijenu nad test podacima. Korišćeni su faktori 0,4 i 0,6 kako bi se izbegla visoka vrednost $wrr$ (eng. \emph{weighted recognition rate}) usled visoke preciznosti nad trening podacima (kada to nije slučaj i sa test podacima). U nastavku sledi više o rezultatima na svakom od skupova pojedinačno.
 
 \subsubsection{Skup Iris}
 \label{iris}
 
-Ovaj skup podataka nalazi se u Pajton paketu za mašinsko učenje: Scikit-learn. Sastoji se od 3 vrste cveta Iris - Setosa, Versicolour, Virginica. 
-Sadrži 150 instanci i ima 5 atributa koji predstavljaju dužinu i širinu latica (eng. \emph{petal length, petal width}), dužinu čašičnog listića 
+Ovaj skup podataka nalazi se u Pajton paketu za mašinsko učenje: Scikit-learn. Sastoji se od 3 vrste cveta Iris - Setosa, Versicolour, Virginica. Sadrži 150 instanci i ima 5 atributa koji predstavljaju dužinu i širinu latica (eng. \emph{petal length, petal width}), dužinu čašičnog listića 
 (eng. \emph{sepal length, sepal width}) i vrstu kojoj cvet pripada (eng. \emph{species}). 
 
-Preciznost neuronske mreže, koja je dobijena na skupu Iris, najveća je od svih testiranih i ona iznosi vise od 95\%, kako na trening, tako i na test podacima. Na slici \ref{fig:irisslika} može se videti i zaključiti da je dobijena preciznost autora ovog rada i preciznost autora ranije pomenutog rada \cite{hindawi} približno ista.
+Procenjena stopa prepoznavanja (wrr) neuronske mreže, koja je dobijena na skupu Iris, najveća je od svih testiranih i ona iznosi vise od 95\%, kako na trening, tako i na test podacima. Na slici \ref{fig:irisslika} može se videti i zaključiti da je dobijena wrr autora ovog rada i preciznost autora ranije pomenutog rada \cite{hindawi} približno ista.
 
 \begin{figure}[h!]
 \begin{center}
-\includegraphics[scale=0.5]{img/iriswrr.png}
+\includegraphics[scale=0.4]{img/iriswrr.png}
 \end{center}
-\caption{Preciznost na trening i test podacima skupa Iris.}
+\caption{Preciznost na podacima skupa Iris. Sa leve strane nalaze se rezultati autora, a desno rezultati iz literature \cite{hindawi} }
 \label{fig:irisslika}
 \end{figure}
 
 \subsubsection{Skup Breast cancer}
 \label{breast}
 
-Skup podataka Breast cancer se, takođe, nalazi u Pajton paketu za mašinsko učenje: Scikit-learn. Predstavlja jednostavan skup podataka koji se koristi za binarnu klasifikaciju. Više informacija o skupu dato je u tabeli.
+Skup podataka Breast cancer se, takođe, nalazi u Pajton paketu za mašinsko učenje: Scikit-learn. Predstavlja jednostavan skup podataka koji se koristi za binarnu klasifikaciju. Više informacija o skupu dato je u tabeli 1.
 
 \begin{center}
 Tabela 1: Informacije o skupu Breast Cancer
@@ -231,22 +234,20 @@ Atributi          & real, positive \\ \hline
 \bigskip
 \end{center} 
 
-Rezultati dobijeni na neuronskoj mreži za skup Breast Cancer neznatno su slabiji od rezultata nad skupom podataka Iris. Njihova preciznost iznosi oko 90\%. Na slici \ref{fig:breastslika} može se videti poređenje rezultata:
+Rezultati dobijeni na neuronskoj mreži za skup Breast Cancer neznatno su slabiji od rezultata nad skupom podataka Iris. Dobijena wrr iznosi oko 90-92\%. Na slici \ref{fig:breastslika} može se videti poređenje rezultata. Primećuje se da su rezultati autora \cite{hindawi} nešto bolji, ali i dalje su obe preciznosti zadovoljavajuće. 
 
 \begin{figure}[h!]
 \begin{center}
-\includegraphics[scale=0.5]{img/bcwrr.png}
+\includegraphics[scale=0.4]{img/bcwrr.png}
 \end{center}
-\caption{Preciznost na trening i test podacima skupa Breast Cancer.}
+\caption{Preciznost na podacima skupa Breast Cancer. Sa leve strane nalaze se rezultati autora, a desno rezultati iz literature \cite{hindawi} }
 \label{fig:breastslika}
 \end{figure}
-
-
 
 \subsubsection{Skup Wine}
 \label{wine}
 
-Wine skup podataka predstavlja klasičan, jednostavan i višeklasni klasifikacioni skup podataka u paketu za Scikit-learn. 
+Wine skup podataka predstavlja klasičan, jednostavan i višeklasni klasifikacioni skup podataka u paketu za Scikit-learn. Više informacija o skupu dato je u tabeli 2.
 
 \begin{center}
 Tabela 2: Informacije o skupu Wine\\
@@ -261,23 +262,23 @@ Atributi          & real, positive \\ \hline
 \bigskip
 \end{center} 
 
+Najslabiji rezultati dobijeni su upravo na ovom skupu, kako u literaturi, tako i u ovom radu. U radu \cite{hindawi} dobijena je wrr oko 85\%, dok su autori ovog rada dobili slabije rezultate - oko 70\%, što se može videti na priloženom grafiku \ref{fig:wineslika}. 
+
 \begin{figure}[h!]
 \begin{center}
-\includegraphics[scale=0.5]{img/winewrr.png}
+\includegraphics[scale=0.4]{img/winewrr.png}
 \end{center}
-\caption{Preciznost na trening i test podacima skupa Wine.}
+\caption{Preciznost na podacima skupa Wine. Sa leve strane nalaze se rezultati autora, a desno rezultati iz literature \cite{hindawi} }
 \label{fig:wineslika}
 \end{figure}
-
-\textit{ Budite objektivni i pošteni u prikazu svojih rezultata i jasno naznačite ako vaš pristup nije bolji (što je vrlo verovatno) od onih koji su predloženi u literaturi. U okviru ovog poglavlja opišite i eksperimentalno okruženje u kojem ste testirali vaš program, karakteristike hardvera, operativni sistem, kompajler, itd. }
-
 
 
 \section{Zaključak}
 \label{sec:zakljucak}
 
-Ovde pišem zaključak. 
+Istraživanjem podešavanja težina neuronske mreže pomoću optimizacije rojem čestica, zaključeno je da rezultati donekle zavise od skupa, što bi moglo sugerisati da je potrebno posvetiti više pažnje pretprocesiranju onih skupova na kojima su rezultati slabiji ili promenu određenih parametara (npr. povećan broj iteracija pri učenju), u cilju veće preciznosti kasnije.
 
+Dalje istraživanje moglo bi da se fokusira na korišćenju drugih optimizacionih algoritama za podešavanje težina neuronskih mreža, kao što su: optimizacija mravljom kolonijom (eng. \emph{Ant Colony Optimization, ACO}), optimizacija kolonijom pčela (eng. \emph{Bee Colony Optimization, BCO}), simulirano kaljenje (eng. \emph{Simulated Annealing, SA}) itd. Drugi pravac istraživanja mogao bi se baviti unapređenjem samog PSO algoritma i njegovih parametara, radi dobijanja boljih rezultata.
 
 \addcontentsline{toc}{section}{Literatura}
 \appendix
