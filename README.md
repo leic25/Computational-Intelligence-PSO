@@ -1,5 +1,5 @@
 # Podešavanje težina neuronske mreže upotrebom optimizacionog algoritma
-Seminarskom rad na kursu **Računarska inteligencija**. 
+Seminarski rad na kursu **Računarska inteligencija**. 
 Rad sadrźi:
 - Python kod 
 - Dokumentaciju napisanu u Latex-u
