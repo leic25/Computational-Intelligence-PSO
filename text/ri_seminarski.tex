@@ -71,8 +71,8 @@
 
 \abstract{
 Ovaj rad se bavi podešavanjem težina neuronske mreže uz pomoć algoritma optimizacije rojem čestica.
-Pored osnovnog teorijskog pristupa datim pojmovima, ANN i PSO, rad sadrži i praktičnu primenu ovakvog
-pristupa podešavanja težina. Kako bi imali osećaj koliko su rezultati dobri, autori ovog rada svoje rezultate
+Pored osnovnog teorijskog pristupa datim pojmovima, rad sadrži i praktičnu primenu ovakvog
+pristupa podešavanja težina. Kako bi stekli utisak koliko su rezultati dobri, autori ovog rada svoje rezultate
 upoređuju sa rezultatima autora rada \emph{Designing Artificial Neural Networks Using Particle Swarm Optimization Algorithms} \cite{hindawi}.
 \\
 \\
@@ -87,7 +87,7 @@ upoređuju sa rezultatima autora rada \emph{Designing Artificial Neural Networks
 
 Podešavanje težina neuronske mreže (eng. \emph{Artificial Neural Network, ANN}) za cilj ima nalaženje optimalnog skupa težina, kako bi čitava neuronska mreža za određene podatke davala što
 tačnije izlaze, kako u primeni za klasifikaciju, tako i u primeni za regresiju. Neuronska mreža može biti korišćena na jako
-bitnim istraživanjima, tako da podešavanje težina može igrati jako bitnu ulogu. Jedan od načina na koje možemo podesiti težine jeste algoritmom optimizacije rojem čestica, skraćeno (eng.
+bitnim istraživanjima, tako da podešavanje težina može igrati jako bitnu ulogu. Jedan od načina na koje možemo podesiti težine jeste algoritmom optimizacije rojem čestica (eng.
 \emph{Particle Swarm Optimization}) \cite{PSOANN}. PSO je algoritam nastao inspirisan prirodom, odnosno kretanjem jata ptica u potrazi za hranom, pa može predstavljati dobar algoritam za
 podešavanje težina neuronske mreže. Problem sa samim algoritmom može biti to što postoji mogućnost zaglavljivanja u lokalnom optimumu, što u startu ne garantuje nalaženja najboljeg mogućeg
 rešenja. Problemom podešavanja težina neuronske mreže, pomoću optimizacije rojem čestica, bavili su se mnogi istraživači \cite{hindawi}.
@@ -133,8 +133,8 @@ a njen autor i održavaoc je gugl inženjer -  François Chollet.
 
 \section{Optimizacija rojem čestica}
 \label{subsec:pso}
-U ovoj sekcije biće objašnjen sam algoritam optimizacije rojem čestica. Najviše vremena biće posvećeno originalnom algoritmu PSO-a kao i drugoj generaciji algoritma PSO (eng. \textit{The Secong Generation of PSO}), kao i novom modelu algoritma PSO 
-(eng. \textit{A New Model of PSO}).
+U ovoj sekcije biće objašnjen sam algoritam optimizacije rojem čestica. Najviše vremena biće posvećeno originalnom algoritmu PSO, drugoj generaciji algoritma 
+PSO (eng. \textit{The Secong Generation of PSO}), kao i novom modelu algoritma PSO (eng. \textit{A New Model of PSO}).
 
 
 \subsection{Originalni algoritam PSO}
@@ -204,9 +204,9 @@ Dve trećine podataka korišćene su za trening podatke, a ostatak čini test po
 ekvivalentan broju različitih klasa u odgovarajućem skupu podataka. Pri kompiliranju Keras modela korišćen je \textit{adam} optimizator,
 ali on nema nikakvog uticaja, već je naveden iz sintaksnih razloga. Kao metrika korišćena je preciznost (eng. \emph{accurancy}). 
 
-Kao što je ranije napomenuto, ANN trenirana je pomoću PSO algoritma. PSO koristi prvo 30, čestica i 300 iteracija, a zatim 50 čestica i 1000 iteracija. 
-Šalju se trening podaci i neuronska mreža. Težine neuronske mreže predstavljaju pozicije čestica. Inicijalne težine biraju se nasumično unutar intervala [-2, 2],
-a ažuriranje težina se vrši prema formuli: 
+Kao što je ranije napomenuto, ANN trenirana je pomoću PSO algoritma. PSO koristi prvo 30, čestica i prolazi kroz 300 iteracija.. 
+Šalju se trening podaci i neuronska mreža. Težine neuronske mreže predstavljaju pozicije čestica. Inicijalne težine biraju se 
+nasumično unutar intervala [-2, 2], a ažuriranje težina se vrši prema formuli: 
 
 \begin{center}
 {$x_i(t+1) = x_i(t) + v_i(t+1)$}
@@ -221,15 +221,16 @@ nekoliko puta i pozicije najgorih pet čestica se nasumično menjaju. Najbolja �
 \label{rezultati}
 
 U ovoj sekciji biće predstavljeni eksperimentalni rezultati dobijeni nad skupovima: \textit{Iris, Breast Cancer i Wine}, kao i upoređeni sa
-rezultatima drugih istraživača koji su se bavili ovom temom i koristili navedene skupove \cite{hindawi}. Stopa prepoznavanja neuronske
+rezultatima drugih istraživača koji su se bavili ovom temom i koristili navedene skupove. Stopa prepoznavanja neuronske
 mreže procenjena je i računata formulom:
 
 \begin{center}
 {$wrr = 0.4*(Tr_r r) + 0.6*(Te_r r)$}, 
 \end{center}
-gde je $Tr_r r$ preciznost nad trening podacima, a $Te_r r$ preciznost dobijenu nad test podacima. Korišćeni su faktori 0.4 i 0.6 
-kako bi se izbegla visoka vrednost $wrr$ (eng. \emph{weighted recognition rate}) usled visoke preciznosti nad trening podacima 
-(kada to nije slučaj i sa test podacima). U nastavku sledi više o rezultatima na svakom od skupova pojedinačno.
+gde je $Tr_r r$ preciznost nad trening podacima, a $Te_r r$ preciznost dobijenu nad test podacima \cite{hindawi}. 
+Korišćeni su faktori 0.4 i 0.6 kako bi se izbegla visoka vrednost $wrr$ (eng. \emph{weighted recognition rate}) 
+usled visoke preciznosti nad trening podacima  (kada to nije slučaj i sa test podacima). U nastavku sledi više o rezultatima 
+na svakom od skupova pojedinačno.
 
 \subsubsection{Skup Iris}
 \label{iris}
