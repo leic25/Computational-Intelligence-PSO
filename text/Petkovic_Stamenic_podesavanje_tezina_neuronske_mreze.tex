@@ -73,7 +73,7 @@
 Ovaj rad se bavi podešavanjem težina neuronske mreže uz pomoć algoritma optimizacije rojem čestica.
 Pored osnovnog teorijskog pristupa datim pojmovima, rad sadrži i praktičnu primenu ovakvog
 pristupa podešavanja težina. Kako bi stekli utisak koliko su rezultati dobri, autori ovog rada svoje rezultate
-upoređuju sa rezultatima autora rada \emph{Designing Artificial Neural Networks Using Particle Swarm Optimization Algorithms} \cite{hindawi}.
+upoređuju sa rezultatima autora rada \emph{Designing Artificial Neural Networks Using Particle Swarm Optimization Algorithms}.
 \\
 \\
 \textbf{Ključne reči:} PSO, neuronske mreže, ANN, optimizacija rojem čestica, Keras, Iris, Wine, Breast Cancer.
@@ -366,27 +366,11 @@ istraživanja mogao bi se baviti unapređenjem samog PSO algoritma i njegovih pa
 \label{fig:test_appendix}
 \end{figure}
 
+
+\newpage
 \section{Kod}
 
-\begin{lstlisting}
-import pandas as pd               # data processing, CSV file I/O (e.g. pd.read_csv)
-import numpy as np                # linear algebra
-from numpy.random import seed
-from numpy.random import rand
-from sklearn import datasets 
-from sklearn.model_selection import train_test_split
-from sklearn import preprocessing
-from keras.models import Sequential
-from keras.layers import Dense
-from keras import losses, optimizers
-from keras.utils import to_categorical
-
-from matplotlib import pyplot as plt
-
-\end{lstlisting}
-
-
-\begin{lstlisting}
+\begin{lstlisting}[caption={Klasa korišćena za čestice},frame=single, label=particle]
 class Particle:
     
     def __init__(self, weights, velocity, omega, c1, c2, 
@@ -411,13 +395,6 @@ class Particle:
         return self.weights
     
     def update_velocity(self, bp):
-        # v = Wv + c1r1(pi - xi) + c2r2(g - xi)
-        # v        - ubrzanje 
-        # W        - omega 
-        # c1 i c2  - unapred zadati parametri
-        # r1 i r2  - slucajni brojevi iz (0,1) uniformne raspodele
-        # pi       - najbolje resenje trenutne jedinke
-        # g        - najbojle globalno resenje
         r1 = np.random.random()
         r2 = np.random.random()
         
@@ -446,7 +423,6 @@ class Particle:
     
     
     def update_particle(self):
-        # xi = xi + vi
         self.weights = np.add(np.array(self.weights), self.velocity)
         
     def update_valuation(self, valuation):
@@ -465,8 +441,8 @@ class Particle:
 
 \end{lstlisting}
 
-
-\begin{lstlisting}
+\newpage
+\begin{lstlisting}[caption={Klasa korišćena za sam algoritam},frame=single, label=simple]
 
 class PSO:
     def __init__(self, num_particles, num_iters, training_x, training_y, model, shapes, c1, c2, w, lower_bound, upper_bound):
@@ -513,7 +489,6 @@ class PSO:
         
         for shape in shapes:
             if(len(shape) == 1):
-                # wght da dobijemo vrednosti iz (0, upp-low)
                 wght = rand(shape[0])*(upp-low)
                 rec = np.full(shape, low)
                 
@@ -559,7 +534,6 @@ class PSO:
             self.update_particles()
             self.evaluate_particles()
             
-            #print("Iteracija: {}\nPreciznost: {}\n".format(i+1, self.best_evaluation))
             
             if(self.isclose(partly_best_solution, self.best_evaluation, 0.001)):
                 self.combo += 1
@@ -592,7 +566,6 @@ class PSO:
                                              self.lower_bound, self.upper_bound, self.particles[4].id)
                 self.combo = 0
                 self.evaluate_particles()
-                #print("Change bad particles")
             
             self.history.append(self.best_evaluation)   
                 
@@ -601,190 +574,6 @@ class PSO:
         return self.best_particle
 
 \end{lstlisting}
-
-
-\begin{lstlisting}
-accs = []
-print("IRIS DATASET: \n\n")
-data1 = datasets.load_iris()
-
-x_train, x_test, y_train, y_test = train_test_split(data1.data, 
-                                                    data1.target, 
-                                                    test_size=0.33)
-
-y_train = to_categorical(y_train)
-y_test = to_categorical(y_test)
-
-
-# Pravljenje neuronske mreze sa 3 sloja - ulazni, skriveni i izlazni
-model = Sequential()
-model.add(Dense(units=100, input_dim=x_train.shape[1], activation='relu'))
-model.add(Dense(units=y_train.shape[1], activation='sigmoid'))
-model.summary()
-
-shapes = [i.shape for i in model.get_weights()]
-
-model.compile(optimizer='adam', 
-            loss=losses.categorical_crossentropy, 
-            metrics=['accuracy'])
-
-test_iris_acc = 0
-train_iris_acc = 0
-best_iris_pso = None
-
-PSOS = []
-for i in range(5):
-    pso = PSO(30, 300, 
-            x_train, y_train, 
-            model, 
-            shapes, 
-            0.5, 1.0, 0.3, -2, 2)
-
-    PSOS.append(pso)
-
-for pso in PSOS:
-
-    best_particle = pso.start_pso()
-
-    model.set_weights(best_particle)
-
-    train_loss, train_acc = model.evaluate(x_train, y_train)
-    test_loss, test_acc = model.evaluate(x_test, y_test)
-
-    if(test_iris_acc < test_acc): 
-        test_iris_acc = test_acc
-        best_iris_pso = pso
-        train_iris_acc = train_acc
-        
-    print("Current PSO train accuracy: " + str(train_acc))
-    print("Current PSO test accuracy:   " + str(test_acc) + "\n")
-
-print()
-print("Global best accuracy: " + str(test_iris_acc))
-accs.append((train_iris_acc, test_iris_acc))
-
-\end{lstlisting}
-
-
-\begin{lstlisting}
-print("\n---------------------------------\nBREAST CANCER DATASET: \n\n")
-data2 = datasets.load_breast_cancer()
-
-x_train, x_test, y_train, y_test = train_test_split(data2.data, 
-                                                    data2.target, 
-                                                    test_size=0.33)
-
-y_train = to_categorical(y_train)
-y_test = to_categorical(y_test)
-
-# Pravljenje neuronske mreze sa 3 sloja - ulazni, skriveni i izlazni
-model = Sequential()
-model.add(Dense(units=100, input_dim=x_train.shape[1], activation='relu'))
-model.add(Dense(units=y_train.shape[1], activation='sigmoid'))
-model.summary()
-
-shapes = [i.shape for i in model.get_weights()]
-
-model.compile(optimizer='adam', 
-            loss=losses.categorical_crossentropy, 
-            metrics=['accuracy'])
-
-test_cancer_acc = 0
-train_cancer_acc = 0
-best_cancer_pso = None
-
-PSOS = []
-for i in range(5):
-    pso = PSO(30, 300, 
-            x_train, y_train, 
-            model, 
-            shapes, 
-            0.5, 1.0, 0.3, -2, 2)
-
-    PSOS.append(pso)
-
-for pso in PSOS:
-
-    best_particle = pso.start_pso()
-
-    model.set_weights(best_particle)
-
-    train_loss, train_acc = model.evaluate(x_train, y_train)
-    test_loss, test_acc = model.evaluate(x_test, y_test)
-
-    if(test_cancer_acc < test_acc): 
-        test_cancer_acc = test_acc
-        train_cancer_acc = train_acc
-        best_cancer_pso = pso
-
-    print("Current PSO train accuracy: " + str(train_acc))
-    print("Current PSO test accuracy:   " + str(test_acc) + "\n")
-
-print()
-print("Global best accuracy: " + str(test_cancer_acc))
-accs.append((train_cancer_acc, test_cancer_acc))
-\end{lstlisting}
-
-
-\begin{lstlisting}
-print("\n---------------------------------\nWINE DATASET: \n\n")
-data3 = datasets.load_wine()
-
-x_train, x_test, y_train, y_test = train_test_split(data3.data, 
-                                                    data3.target, 
-                                                    test_size=0.33)
-
-y_train = to_categorical(y_train)
-y_test = to_categorical(y_test)
-
-# Pravljenje neuronske mreze sa 3 sloja - ulazni, skriveni i izlazni
-model = Sequential()
-model.add(Dense(units=100, input_dim=x_train.shape[1], activation='relu'))
-model.add(Dense(units=y_train.shape[1], activation='sigmoid'))
-model.summary()
-
-shapes = [i.shape for i in model.get_weights()]
-
-model.compile(optimizer='adam', 
-            loss=losses.categorical_crossentropy, 
-            metrics=['accuracy'])
-
-test_wine_acc = 0
-train_wine_acc = 0
-best_wine_pso = None
-
-PSOS = []
-for i in range(5):
-    pso = PSO(30, 300, 
-            x_train, y_train, 
-            model, 
-            shapes, 
-            0.5, 1.0, 0.3, -2, 2)
-
-    PSOS.append(pso)
-
-for pso in PSOS:
-
-    best_particle = pso.start_pso()
-
-    model.set_weights(best_particle)
-
-    train_loss, train_acc = model.evaluate(x_train, y_train)
-    test_loss, test_acc = model.evaluate(x_test, y_test)
-
-    if(test_wine_acc < test_acc): 
-        test_wine_acc = test_acc
-        train_wine_acc = train_acc
-        best_wine_pso = pso
-
-    print("Current PSO train accuracy: " + str(train_acc))
-    print("Current PSO test accuracy:   " + str(test_acc) + "\n")
-
-print()
-print("Global best accuracy: " + str(test_wine_acc))
-accs.append((train_wine_acc, test_wine_acc))
-\end{lstlisting}
-
 
 
 \end{document}

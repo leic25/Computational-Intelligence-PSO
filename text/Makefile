@@ -1,4 +1,4 @@
-DOCNAME= ri_seminarski
+DOCNAME= Petkovic_Stamenic_podesavanje_tezina_neuronske_mreze
 all: sem
 
 .PHONY: clean
