@@ -1,5 +1,8 @@
 # Podešavanje težina neuronske mreže upotrebom optimizacionog algoritma
+### (Setting Artificial Neural Networks' weights using Particle Swarm Optimization Algorithms)
 Seminarski rad na kursu **Računarska inteligencija**. 
+
+
 Rad sadrźi:
 - Python kod 
 - Dokumentaciju napisanu u Latex-u
